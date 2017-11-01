@@ -1,0 +1,35 @@
+== Serverless Development Environment 
+
+This container is intended to provide a lightweight Node and Serverless development environment for working with AWS Lambda functions. 
+
+The container requires one host volume mapping to be useful: 
+
+. One for your projects / code that you are working on. This is assumed to be the current working directory in the instructions below.
+
+
+=== Building 
+
+----
+cd docker-serverless-devenv
+docker build .
+----
+
+=== Running
+
+To start the container for the first time:
+
+[source,language="bash"]
+----
+cd /your/project/folder
+docker run --name devenv -it -v ${PWD}:/home/projects serverless-devenv /bin/ash
+----
+
+
+If you wish to rerun the container you can use the following command:
+
+[source,language="bash"]
+----
+docker start devenv -i
+----
+
+//end
