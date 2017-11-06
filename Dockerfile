@@ -1,16 +1,21 @@
-FROM mhart/alpine-node
+FROM ubuntu:16.04 
 MAINTAINER mcrotty@tssg.org
 
-RUN apk update && apk add unzip curl python openntpd
+RUN apt-get update && apt-get install -y unzip curl python openntpd sudo
+
+# Node v8
+RUN curl -sL https://deb.nodesource.com/setup_8.x | /bin/bash -
+RUN apt-get install -y build-essential nodejs
 
 # Amazon tools
 RUN curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip" 
 RUN unzip awscli-bundle.zip \
 && ./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws 
 
-# User based development environment
 RUN npm install -g serverless
-RUN addgroup -S app && adduser -s /bin/ash -D -h /home/app -u 1000 -g app -G app app
+# User based development environment
+RUN useradd --shell /bin/bash --home-dir /home/app --create-home --uid 1000 app
 USER app
 WORKDIR /home/app
+EXPOSE 8000
 
