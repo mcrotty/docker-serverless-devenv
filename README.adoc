@@ -11,7 +11,7 @@ The container requires one host volume mapping to be useful:
 
 ----
 cd docker-serverless-devenv
-docker build .
+docker build -t devenv .
 ----
 
 === Running
